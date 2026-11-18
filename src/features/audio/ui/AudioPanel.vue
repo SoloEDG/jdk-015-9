@@ -2,11 +2,16 @@
 import type { AudioEngine } from "../model/engine";
 import type { StageDocument } from "../../../shared/types";
 import { clock } from "../../../shared/math";
-defineProps<{ engine: AudioEngine; doc: StageDocument }>();
+const props = defineProps<{ engine: AudioEngine; doc: StageDocument }>();
 function load(e: Event, engine: AudioEngine) {
   const f = (e.target as HTMLInputElement).files?.[0];
   if (f) void engine.file(f);
 }
+function scrub(e: Event) {
+  const input = e.target as HTMLInputElement;
+  props.engine.seek(Number(input.value));
+}
+const duration = () => props.engine.state.duration || 1;
 </script>
 <template>
   <section class="panel audio-panel">
@@ -40,7 +45,9 @@ function load(e: Event, engine: AudioEngine) {
         ><small>{{
           engine.state.source === "mic"
             ? "实时输入 · 不监听回放"
-            : "STEREO · LOOP ENABLED"
+            : engine.state.loop.enabled
+              ? `循环 ${clock(engine.state.loop.start)} – ${clock(engine.state.loop.end)}`
+              : "STEREO · 顺序播放"
         }}</small>
       </div>
     </div>
@@ -62,6 +69,17 @@ function load(e: Event, engine: AudioEngine) {
         ></span
       ><span class="tag">{{ engine.state.loading ? "解码中" : "AUDIO" }}</span>
     </div>
+    <input
+      v-if="engine.state.source !== 'mic'"
+      class="scrubber"
+      type="range"
+      min="0"
+      :max="duration()"
+      step="0.01"
+      :value="engine.state.position"
+      aria-label="播放位置"
+      @input="scrub"
+    />
     <label class="control"
       >监听音量 <b>{{ Math.round(doc.gain * 100) }}%</b
       ><input

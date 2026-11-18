@@ -1,20 +1,48 @@
 <script setup lang="ts">
 import type { StageDocument } from "../../../shared/types";
 import type { LiveControls } from "../model/controls";
-defineProps<{ doc: StageDocument; controls: LiveControls; beat: boolean }>();
+import type { BeatEngine } from "../../beat/model/beat";
+defineProps<{
+  doc: StageDocument;
+  controls: LiveControls;
+  beat: BeatEngine;
+  beatPulse: boolean;
+}>();
 </script>
 <template>
   <section class="panel live-panel">
     <div class="panel-heading">
       <span>04 / PERFORMANCE</span
-      ><span class="dot" :class="{ on: beat }"></span>
+      ><span class="dot" :class="{ on: beatPulse }"></span>
     </div>
     <div class="tempo">
       <div>
-        <strong>{{ controls.bpm.value }}</strong
-        ><span>BPM / MANUAL</span>
+        <strong>{{ controls.bpm() }}</strong
+        ><span>{{
+          beat.state.tapActive
+            ? "BPM / TAP TAKEOVER"
+            : beat.state.grid
+              ? "BPM / GRID"
+              : "BPM / MANUAL"
+        }}</span>
       </div>
-      <button @click="controls.tap">TAP <kbd>T</kbd></button>
+      <button :class="{ selected: beat.state.tapActive }" @click="controls.tap">
+        TAP <kbd>T</kbd>
+      </button>
+    </div>
+    <div class="beat-status" v-if="beat.state.grid">
+      <span
+        ><b v-if="beat.state.location">{{
+          beat.state.location.barNumber
+        }}</b>
+        ·
+        <b v-if="beat.state.location">{{
+          beat.state.location.beatNumber + 1
+        }}</b></span
+      >
+      <small
+        >{{ beat.state.tapActive ? "手动节拍临时接管，网格保留" : "节拍指示与场景触发共用此网格" }}</small
+      >
     </div>
     <div class="live-buttons">
       <button :class="{ selected: doc.frozen }" @click="controls.freeze">

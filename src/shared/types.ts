@@ -27,6 +27,16 @@ export interface StageDocument {
   strobe: boolean;
   master: number;
 }
+export type TakeEventKind = "beat" | "bar" | "scene" | "manual";
+export interface TakeEvent {
+  seq: number;
+  time: number;
+  kind: TakeEventKind;
+  bar?: number;
+  beat?: number;
+  bpm?: number;
+  label?: string;
+}
 export interface Take {
   id: string;
   url: string;
@@ -34,6 +44,7 @@ export interface Take {
   duration: number;
   name: string;
   mime: string;
+  events?: TakeEvent[];
 }
 export interface Theme {
   id: string;

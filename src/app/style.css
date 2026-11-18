@@ -889,3 +889,372 @@ footer i {
     gap: 20px;
   }
 }
+
+/* ---- beat grid ---- */
+.beat-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.beat-readout {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 18px 0 12px;
+}
+.beat-big {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 78px;
+  transition: color 0.12s;
+}
+.beat-big strong {
+  font: 32px "Space Grotesk";
+  color: #e2dced;
+}
+.beat-big span {
+  font: 8px "Space Grotesk";
+  color: #676473;
+  letter-spacing: 1px;
+}
+.beat-big.flash strong {
+  color: #e6d7ff;
+  text-shadow: 0 0 14px #b09ae880;
+}
+.beat-count {
+  min-width: 0;
+  flex: 1;
+}
+.beat-count strong {
+  font: 19px "Space Grotesk";
+  color: #cfc6e0;
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+.beat-count strong b {
+  color: #eee6fb;
+}
+.beat-count small {
+  margin-top: 4px;
+  font-size: 9px;
+}
+.beat-dots {
+  display: flex;
+  gap: 4px;
+  margin-top: 7px;
+}
+.beat-dots i {
+  width: 13px;
+  height: 3px;
+  border-radius: 1px;
+  background: #2c2b37;
+}
+.beat-dots i.lit {
+  background: #b6a2e9;
+}
+.beat-dots i.lit.manual {
+  background: #e0b06a;
+}
+.beat-notice {
+  font-size: 9px;
+  line-height: 1.7;
+  color: #a99ac2;
+  background: #1c1a26;
+  border: 1px solid #352d47;
+  border-radius: 5px;
+  padding: 8px 9px;
+  margin: 0 0 10px;
+}
+.beat-notice.tap {
+  color: #e0c48f;
+  border-color: #4b3d2a;
+  background: #221d15;
+}
+.beat-notice button {
+  margin-left: 6px;
+  padding: 2px 7px;
+  font-size: 9px;
+}
+.beat-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.beat-actions button {
+  flex: 1;
+  min-width: 130px;
+  font-size: 10px;
+  padding: 9px 8px;
+}
+.beat-panel .beat-actions button {
+  min-width: 0;
+}
+.candidate-list,
+.uncertain-runs,
+.loop-tools {
+  margin-top: 13px;
+  border-top: 1px solid #24232e;
+  padding-top: 11px;
+}
+.candidate-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font: 9px "Space Grotesk";
+  color: #8d8799;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+}
+.candidate-head small {
+  font-size: 8px;
+}
+.candidate {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px;
+  border: 1px solid #2a2833;
+  border-radius: 6px;
+  background: #16161d;
+  margin-bottom: 6px;
+}
+.candidate.applied {
+  border-color: #6f5e9d;
+  background: #211c2e;
+}
+.candidate.preview {
+  border-color: #7f6fab;
+}
+.candidate > div {
+  flex: 1;
+  min-width: 0;
+}
+.candidate strong {
+  display: block;
+  font: 10px "Space Grotesk";
+}
+.candidate small {
+  margin-top: 4px;
+  font-size: 8px;
+  white-space: normal;
+}
+.candidate button {
+  font-size: 9px;
+  padding: 5px 7px;
+  flex: 0 0 auto;
+}
+.ghost {
+  background: transparent;
+  border-color: #34323f;
+  color: #a39bb3;
+}
+.ghost:hover {
+  background: #201e29;
+}
+.stop-preview {
+  width: 100%;
+  font-size: 9px;
+}
+.grid-tools {
+  margin-top: 15px;
+}
+.tool-label {
+  font: 9px "Space Grotesk";
+  color: #8d8799;
+  letter-spacing: 0.8px;
+}
+.tool-help {
+  display: block;
+  font-size: 9px;
+  color: #6b687b;
+  margin-top: 5px;
+}
+.beat-grid-canvas {
+  display: block;
+  width: 100%;
+  height: 210px;
+  margin-top: 9px;
+  border: 1px solid #272531;
+  border-radius: 6px;
+  background: #0d0e15;
+  touch-action: none;
+  cursor: pointer;
+}
+.grid-edit {
+  margin-top: 11px;
+}
+.bar-edit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: #9c96a9;
+}
+.bar-edit > span {
+  flex: 1;
+}
+.bar-edit b {
+  font: 12px "Space Grotesk";
+  color: #d6cbe9;
+}
+.bar-edit i {
+  margin-left: 5px;
+  font-size: 8px;
+  color: #7b7490;
+}
+.bar-edit i.uncertain {
+  color: #d3a75c;
+}
+.bar-edit button {
+  padding: 4px 8px;
+  font-size: 9px;
+}
+.nudge-row {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.nudge-row button {
+  flex: 1;
+  min-width: 0;
+  font-size: 9px;
+  padding: 6px 4px;
+}
+.control.compact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 11px;
+}
+.control.compact select {
+  margin-left: auto;
+  background: #1c1b24;
+  color: #c9c3d6;
+  border: 1px solid #35333f;
+  border-radius: 4px;
+  font: 10px "DM Sans";
+  padding: 4px 6px;
+}
+.run-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.run-row > div {
+  flex: 1;
+  min-width: 0;
+}
+.run-row strong {
+  font: 10px "Space Grotesk";
+  display: block;
+}
+.run-row small {
+  margin-top: 3px;
+  font-size: 8px;
+}
+.run-row button {
+  font-size: 9px;
+  padding: 5px 8px;
+}
+.run-row.subtle button {
+  flex: 1;
+}
+.loop-tools .nudge-row button {
+  font-size: 9px;
+}
+.grid-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 13px;
+  border-top: 1px solid #24232e;
+  padding-top: 9px;
+}
+.grid-foot span {
+  font-size: 8px;
+  color: #6b687b;
+}
+.grid-foot button {
+  font-size: 9px;
+  padding: 4px 8px;
+}
+.scrubber {
+  margin: -8px 0 6px !important;
+  height: 3px;
+}
+.take-col {
+  margin: 12px 0;
+}
+.take-col .take {
+  margin: 0;
+}
+.take-events {
+  padding: 8px 12px 2px;
+  border: 1px solid #292735;
+  border-top: 0;
+  border-radius: 0 0 6px 6px;
+  background: #121219;
+  margin-top: -1px;
+}
+.event-lane {
+  position: relative;
+  height: 16px;
+  border-bottom: 1px solid #2a2933;
+  margin-bottom: 4px;
+}
+.event-lane .mark {
+  position: absolute;
+  bottom: 0;
+  width: 1px;
+  height: 9px;
+  background: #8b7fab;
+  transform: translateX(-0.5px);
+}
+.event-lane .mark.bar {
+  height: 14px;
+  background: #b4a1f5;
+  width: 1.5px;
+}
+.event-lane .mark.scene {
+  height: 14px;
+  width: 5px;
+  background: #e0a35c;
+  border-radius: 1px 1px 0 0;
+  transform: translateX(-2px);
+}
+.event-lane .mark.manual {
+  background: #d5c28d;
+}
+.beat-label.grid {
+  color: #a99ac2;
+}
+.beat-label.tap {
+  color: #d9b877;
+}
+.beat-label.uncertain {
+  color: #d3a75c;
+}
+.beat-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: -12px 0 16px;
+  color: #b4a6c8;
+  font: 13px "Space Grotesk";
+}
+.beat-status > span {
+  color: #8d839b;
+}
+.beat-status > span b {
+  color: #e3d9f4;
+  font: 16px "Space Grotesk";
+  margin: 0 2px;
+}
+.beat-status small {
+  font-size: 8px;
+  line-height: 1.5;
+}

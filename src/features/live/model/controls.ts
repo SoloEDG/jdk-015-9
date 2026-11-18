@@ -1,21 +1,18 @@
-import { ref } from "vue";
 import type { StageDocument } from "../../../shared/types";
-export function createControls(doc: StageDocument) {
-  const taps = ref<number[]>([]),
-    bpm = ref(120);
+import type { BeatEngine } from "../../beat/model/beat";
+
+export function createControls(doc: StageDocument, beat: BeatEngine) {
   function tap() {
-    const now = performance.now();
-    taps.value = [...taps.value.filter((t) => now - t < 3000), now].slice(-6);
-    if (taps.value.length > 1)
-      bpm.value = Math.round(
-        (60000 * (taps.value.length - 1)) / (now - taps.value[0]),
-      );
+    beat.tap();
   }
   function blackout() {
     doc.blackout = !doc.blackout;
   }
   function freeze() {
     doc.frozen = !doc.frozen;
+  }
+  function bpm() {
+    return beat.state.displayBpm;
   }
   return { bpm, tap, blackout, freeze };
 }

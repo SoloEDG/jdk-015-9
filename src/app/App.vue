@@ -10,6 +10,7 @@ import {
 } from "lucide-vue-next";
 import { createDocument } from "../shared/document";
 import { createAudio, AudioPanel } from "../features/audio";
+import { createBeat, BeatPanel } from "../features/beat";
 import { StageCanvas, ThemePanel } from "../features/visuals";
 import { createScenes, ScenePanel, SceneStrip } from "../features/scenes";
 import {
@@ -21,9 +22,13 @@ import {
 import { createRecorder, RecordPanel, TakeList } from "../features/recording";
 const doc = createDocument(),
   audio = createAudio(doc),
-  scenes = createScenes(doc),
-  controls = createControls(doc),
+  beat = createBeat(audio),
+  scenes = createScenes(doc, beat),
+  controls = createControls(doc, beat),
   recorder = createRecorder();
+beat.setEventSink((event) => {
+  recorder.mark(event);
+});
 const canvas = ref<HTMLCanvasElement>(),
   stage = ref<HTMLElement>();
 const fullError = ref("");
@@ -48,6 +53,7 @@ async function fullscreen() {
 }
 onUnmounted(() => {
   unbind();
+  beat.dispose();
   audio.dispose();
   recorder.dispose();
 });
@@ -112,18 +118,21 @@ onUnmounted(() => {
             </div>
             <span class="canvas-resolution">16:9 · 1280 × 720</span>
           </div>
-          <SignalMeter :frame="audio.frame.value" />
+          <SignalMeter :frame="audio.frame.value" :beat="beat" />
         </section>
         <p v-if="fullError" role="alert">{{ fullError }}</p>
         <SceneStrip :doc="doc" @select="scenes.select" /><ThemePanel
           :scene="scenes.active.value"
-        /><TakeList :recorder="recorder" />
+        /><BeatPanel :beat="beat" :audio="audio" /><TakeList
+          :recorder="recorder"
+        />
       </div>
       <aside class="right-column">
         <LivePanel
           :doc="doc"
           :controls="controls"
-          :beat="audio.frame.value.beat"
+          :beat="beat"
+          :beat-pulse="beat.state.flash"
         /><RecordPanel :recorder="recorder" @start="start" />
         <div class="note">
           <Radio :size="19" />
@@ -141,8 +150,8 @@ onUnmounted(() => {
         ><SlidersHorizontal :size="13" /> ALL SYSTEMS READY
         <i>·</i> 浏览器本地运行</span
       ><span
-        >SPACE 播放 / 暂停 <i>·</i> 1–4 场景 <i>·</i> B 黑场 <i>·</i> F
-        冻结</span
+        >SPACE 播放 / 暂停 <i>·</i> 1–4 场景 <i>·</i> B 黑场 <i>·</i> F 冻结
+        <i>·</i> T 敲击</span
       ><span>MADE FOR THE MOMENT ↗</span>
     </footer>
   </div>
